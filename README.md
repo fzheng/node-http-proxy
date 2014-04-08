@@ -234,26 +234,6 @@ httpProxy.createServer({
 }).listen(8014);
 ```
 
-#### Tracking the redirection
-```js
-//
-// Create a proxy server, and not allow redirection breaking the proxy
-//
-httpProxy.createProxyServer({
-  agent  : http.globalAgent,
-  target: {
-    protocol: 'http:',
-    host: 'www1.macys.com'
-  },
-  headers: {
-    host: 'www1.macys.com'
-  },
-  trapRedirect: {
-    target: "localhost:8011"
-  }
-}).listen(8011);
-```
-
 Also you can proxy the websocket requests just calling the `ws(req, socket, head)` method.
 
 ```js
@@ -279,6 +259,26 @@ proxyServer.on('upgrade', function (req, socket, head) {
 });
 
 proxyServer.listen(8015);
+```
+
+#### Tracking the redirection
+```js
+//
+// Create a proxy server, and not allow redirection breaking the proxy
+//
+httpProxy.createProxyServer({
+  agent  : http.globalAgent,
+  target: {
+    protocol: 'http:',
+    host: 'www1.macys.com'
+  },
+  headers: {
+    host: 'www1.macys.com'
+  },
+  trapRedirect: {
+    target: "localhost:8011"
+  }
+}).listen(8011);
 ```
 
 ### Contributing and Issues
@@ -309,7 +309,7 @@ If you would like to track redirection and not allow it breaking your reverse pr
 
  *  **trapRedirect**: object to be passed to http(s).request
  *  **trapRedirect.source** (optional): the source domain/url of the redirection starts, by default, **target.domain** or **headers.domain** will be used
- *  **trapRedirect.target**: the target domain/url you wish the redirection go instead
+ *  **trapRedirect.target**: the target domain/url you wish the redirection to go instead
 
 ### Test
 
