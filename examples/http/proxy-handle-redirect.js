@@ -33,22 +33,20 @@ var https = require('https'),
 //
 // Create a HTTP Proxy server with a HTTPS target
 //
-//httpProxy.createProxyServer({
-//  target: 'https://google.com',
-//  agent  : https.globalAgent,
-//  headers: {
-//    host: 'google.com'
-//  }
-//}).listen(8011);
-httpProxy.createProxyServer({
+var options = {
   agent  : http.globalAgent,
   target: {
+    protocol: 'http:',
     host: 'www1.macys.com'
   },
-  url: 'http://www.macys.com/catalog/index.ognc?CategoryID=9915&cm_sp=us_hdr-_-bed-%26-bath-_-9915_sheets',
   headers: {
     host: 'www1.macys.com'
+  },
+  trapRedirect: {
+    target: "localhost:8011"
   }
-}).listen(8011);
+};
+
+httpProxy.createProxyServer(options).listen(8011);
 
 util.puts('http proxy server'.blue + ' started '.green.bold + 'on port '.blue + '8011'.yellow);
