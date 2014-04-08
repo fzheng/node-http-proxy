@@ -2,7 +2,7 @@
   <img src="https://raw.github.com/nodejitsu/node-http-proxy/master/doc/logo.png"/>
 </p>
 
-node-http-proxy
+node-http-proxy (revised by fzheng)
 =======
 
 `node-http-proxy` is an HTTP programmable proxying library that supports
@@ -234,6 +234,26 @@ httpProxy.createServer({
 }).listen(8014);
 ```
 
+#### Tracking the redirection
+```js
+//
+// Create a proxy server, and not allow redirection breaking the proxy
+//
+httpProxy.createProxyServer({
+  agent  : http.globalAgent,
+  target: {
+    protocol: 'http:',
+    host: 'www1.macys.com'
+  },
+  headers: {
+    host: 'www1.macys.com'
+  },
+  trapRedirect: {
+    target: "localhost:8011"
+  }
+}).listen(8011);
+```
+
 Also you can proxy the websocket requests just calling the `ws(req, socket, head)` method.
 
 ```js
@@ -285,6 +305,11 @@ If you are using the `proxyServer.listen` method, the following options are also
  *  **xfwd**: true/false, adds x-forward headers
  *  **toProxy**: passes the absolute URL as the `path` (useful for proxying to proxies)
 
+If you would like to track redirection and not allow it breaking your reverse proxy, the following options are also applicable:
+
+ *  **trapRedirect**: object to be passed to http(s).request
+ *  **trapRedirect.source** (optional): the source domain/url of the redirection starts, by default, **target.domain** or **headers.domain** will be used
+ *  **trapRedirect.target**: the target domain/url you wish the redirection go instead
 
 ### Test
 
