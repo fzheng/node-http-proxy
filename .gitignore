@@ -8,3 +8,4 @@ tes.js
 .idea
 *.log
 .DS_Store
+cache

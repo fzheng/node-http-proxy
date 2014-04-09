@@ -44,6 +44,14 @@ var options = {
   },
   trapRedirect: {
     target: "localhost:8011"
+  },
+  "cacheSettings": {
+    "rules": [
+      {
+        "regex": /.*/,
+        "ttl": 60000
+      }
+    ]
   }
 };
 
